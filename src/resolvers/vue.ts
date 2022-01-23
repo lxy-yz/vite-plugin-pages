@@ -8,24 +8,24 @@ import { generateClientCode } from '../stringify'
 import type { CustomBlock, Optional, ResolvedOptions } from '../types'
 import type { PageContext } from '../context'
 
-export interface Route {
+export interface VueRouteBase {
   name: string
   path: string
   props?: boolean
   component: string
-  children?: Route[]
+  children?: VueRouteBase[]
   customBlock?: CustomBlock
   rawRoute: string
 }
 
-export type PrepareRoutes = Omit<Optional<Route, 'rawRoute' | 'name' | 'component'>, 'children'> & {
-  children?: PrepareRoutes[]
+export type VueRoute = Omit<Optional<VueRouteBase, 'rawRoute' | 'name' | 'component'>, 'children'> & {
+  children?: VueRoute[]
 }
 
 function prepareRoutes(
   options: ResolvedOptions,
-  routes: PrepareRoutes[],
-  parent?: PrepareRoutes,
+  routes: VueRoute[],
+  parent?: VueRoute,
 ) {
   for (const route of routes) {
     if (route.name)
@@ -61,7 +61,7 @@ export async function resolveVueRoutes(ctx: PageContext) {
     // sort routes for HMR
     .sort((a, b) => countSlash(a.route) - countSlash(b.route))
 
-  const routes: Route[] = []
+  const routes: VueRouteBase[] = []
 
   pageRoutes.forEach((page) => {
     const pathNodes = page.route.split('/')
@@ -70,7 +70,7 @@ export async function resolveVueRoutes(ctx: PageContext) {
     const component = page.path.replace(ctx.root, '')
     const customBlock = ctx.customBlockMap.get(page.path)
 
-    const route: Route = {
+    const route: VueRouteBase = {
       name: '',
       path: '',
       component,

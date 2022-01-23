@@ -1,4 +1,10 @@
-import type { PrepareRoute, Route } from './resolvers'
+import type { ReactRoute } from './resolvers/react'
+import type { VueRoute } from './resolvers/vue'
+import type { SolidRoute } from './resolvers/solid'
+
+export type Route = VueRoute | ReactRoute | SolidRoute
+
+export { ReactRoute, VueRoute, SolidRoute }
 
 export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
@@ -60,15 +66,15 @@ interface Options {
   /**
    * Extend route records
    */
-  extendRoute?: (route: PrepareRoute, parent: PrepareRoute | undefined) => Route | void
+  extendRoute?: (route: any, parent: any | undefined) => any | void
   /**
    * Custom generated routes
    */
-  onRoutesGenerated?: (routes: PrepareRoute[]) => Route[] | Promise<Route[] | void>
+  onRoutesGenerated?: (routes: any[]) => any[] | Promise<any[] | void>
   /**
    * Custom generated client code
    */
-  onClientGenerated?: (clientCode: string) => string | Promise<string | void>
+  onClientGenerated?: (clientCode: string) => string | void | Promise<string | void>
 
   /**
    * Paths to the directory to search for page components.
