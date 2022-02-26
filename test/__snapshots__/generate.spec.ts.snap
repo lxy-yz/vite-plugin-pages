@@ -112,10 +112,15 @@ import _examples_react_src_pages_index_tsx from \\"/examples/react/src/pages/ind
 import _examples_react_src_pages_blog_$___all$_tsx from \\"/examples/react/src/pages/blog/[...all].tsx\\";
 import _examples_react_src_pages_blog_$id$_tsx from \\"/examples/react/src/pages/blog/[id].tsx\\";
 import _examples_react_src_pages_blog_index_tsx from \\"/examples/react/src/pages/blog/index.tsx\\";
+import _examples_react_src_pages_blog_today_$___all$_tsx from \\"/examples/react/src/pages/blog/today/[...all].tsx\\";
 import _examples_react_src_pages_blog_today_index_tsx from \\"/examples/react/src/pages/blog/today/index.tsx\\";
 import React from \\"react\\";
 
+<<<<<<< HEAD
 const routes = [{\\"caseSensitive\\":false,\\"path\\":\\"*\\",\\"element\\":React.createElement(_examples_react_src_pages_$___all$_tsx)},{\\"caseSensitive\\":false,\\"path\\":\\"about\\",\\"element\\":React.createElement(_examples_react_src_pages_about_tsx),\\"children\\":[{\\"caseSensitive\\":false,\\"element\\":React.createElement(_examples_react_src_pages_about_index_tsx),\\"index\\":true}]},{\\"caseSensitive\\":false,\\"path\\":\\"components\\",\\"element\\":React.createElement(_examples_react_src_pages_components_tsx)},{\\"caseSensitive\\":false,\\"element\\":React.createElement(_examples_react_src_pages_index_tsx),\\"index\\":true},{\\"caseSensitive\\":false,\\"path\\":\\"blog\\",\\"children\\":[{\\"caseSensitive\\":false,\\"path\\":\\"*\\",\\"element\\":React.createElement(_examples_react_src_pages_blog_$___all$_tsx)},{\\"caseSensitive\\":false,\\"path\\":\\":id\\",\\"element\\":React.createElement(_examples_react_src_pages_blog_$id$_tsx)},{\\"caseSensitive\\":false,\\"element\\":React.createElement(_examples_react_src_pages_blog_index_tsx),\\"index\\":true},{\\"caseSensitive\\":false,\\"path\\":\\"today\\",\\"children\\":[{\\"caseSensitive\\":false,\\"element\\":React.createElement(_examples_react_src_pages_blog_today_index_tsx),\\"index\\":true}]}]}];
+=======
+const routes = [{\\"caseSensitive\\":false,\\"path\\":\\"*\\",\\"element\\":React.createElement(_examples_react_src_pages_$___all$_tsx)},{\\"caseSensitive\\":false,\\"path\\":\\"about\\",\\"element\\":React.createElement(_examples_react_src_pages_about_tsx),\\"children\\":[{\\"caseSensitive\\":false,\\"element\\":React.createElement(_examples_react_src_pages_about_index_tsx),\\"index\\":true}]},{\\"caseSensitive\\":false,\\"path\\":\\"components\\",\\"element\\":React.createElement(_examples_react_src_pages_components_tsx)},{\\"caseSensitive\\":false,\\"element\\":React.createElement(_examples_react_src_pages_index_tsx),\\"index\\":true},{\\"caseSensitive\\":false,\\"path\\":\\"blog\\",\\"children\\":[{\\"caseSensitive\\":false,\\"path\\":\\"*\\",\\"element\\":React.createElement(_examples_react_src_pages_blog_$___all$_tsx)},{\\"caseSensitive\\":false,\\"path\\":\\":id\\",\\"element\\":React.createElement(_examples_react_src_pages_blog_$id$_tsx)},{\\"caseSensitive\\":false,\\"element\\":React.createElement(_examples_react_src_pages_blog_index_tsx),\\"index\\":true},{\\"caseSensitive\\":false,\\"path\\":\\"today\\",\\"children\\":[{\\"caseSensitive\\":false,\\"path\\":\\"*\\",\\"element\\":React.createElement(_examples_react_src_pages_blog_today_$___all$_tsx)},{\\"caseSensitive\\":false,\\"element\\":React.createElement(_examples_react_src_pages_blog_today_index_tsx),\\"index\\":true}]}]}];
+>>>>>>> fork/main
 
 export default routes;"
 `;
@@ -170,6 +175,11 @@ exports[`Generate routes > react - should match snapshot > routes 1`] = `
       {
         "caseSensitive": false,
         "children": [
+          {
+            "caseSensitive": false,
+            "element": "/examples/react/src/pages/blog/today/[...all].tsx",
+            "path": "*",
+          },
           {
             "caseSensitive": false,
             "element": "/examples/react/src/pages/blog/today/index.tsx",
@@ -361,6 +371,108 @@ exports[`Generate routes > routeStyle > remix style should match snapshot > rout
 ]
 `;
 
+<<<<<<< HEAD
+=======
+exports[`Generate routes > solid - should match snapshot > client code 1`] = `
+"import * as Solid from \\"solid-js\\";
+
+const routes = [{\\"path\\":\\"*\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/[...all].tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/[...all].tsx'))},{\\"path\\":\\":sensor\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/[sensor].tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/[sensor].tsx')),\\"children\\":[{\\"path\\":\\"current\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/[sensor]/current.tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/[sensor]/current.tsx'))}]},{\\"path\\":\\"about\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/about.tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/about.tsx')),\\"children\\":[{\\"path\\":\\":id\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/about/[id].tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/about/[id].tsx')),\\"children\\":[{\\"path\\":\\"more\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/about/[id]/more.tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/about/[id]/more.tsx'))},{\\"path\\":\\"nested\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/about/[id]/nested.tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/about/[id]/nested.tsx'))}]},{\\"path\\":\\"\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/about/index.tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/about/index.tsx'))}]},{\\"path\\":\\"components\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/components.tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/components.tsx'))},{\\"path\\":\\"/\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/index.tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/index.tsx'))},{\\"path\\":\\"blog\\",\\"children\\":[{\\"path\\":\\":id\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/blog/[id].tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/blog/[id].tsx'))},{\\"path\\":\\"\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/blog/index.tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/blog/index.tsx'))},{\\"path\\":\\"today\\",\\"children\\":[{\\"path\\":\\"*\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/blog/today/[...all].tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/blog/today/[...all].tsx'))},{\\"path\\":\\"\\",\\"element\\":Solid.lazy(() => import('/examples/solid/src/pages/blog/today/index.tsx')),\\"component\\":Solid.lazy(() => import('/examples/solid/src/pages/blog/today/index.tsx'))}]}]}];
+
+export default routes;"
+`;
+
+exports[`Generate routes > solid - should match snapshot > routes 1`] = `
+[
+  {
+    "component": "/examples/solid/src/pages/[...all].tsx",
+    "element": "/examples/solid/src/pages/[...all].tsx",
+    "path": "*",
+  },
+  {
+    "children": [
+      {
+        "component": "/examples/solid/src/pages/[sensor]/current.tsx",
+        "element": "/examples/solid/src/pages/[sensor]/current.tsx",
+        "path": "current",
+      },
+    ],
+    "component": "/examples/solid/src/pages/[sensor].tsx",
+    "element": "/examples/solid/src/pages/[sensor].tsx",
+    "path": ":sensor",
+  },
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "component": "/examples/solid/src/pages/about/[id]/more.tsx",
+            "element": "/examples/solid/src/pages/about/[id]/more.tsx",
+            "path": "more",
+          },
+          {
+            "component": "/examples/solid/src/pages/about/[id]/nested.tsx",
+            "element": "/examples/solid/src/pages/about/[id]/nested.tsx",
+            "path": "nested",
+          },
+        ],
+        "component": "/examples/solid/src/pages/about/[id].tsx",
+        "element": "/examples/solid/src/pages/about/[id].tsx",
+        "path": ":id",
+      },
+      {
+        "component": "/examples/solid/src/pages/about/index.tsx",
+        "element": "/examples/solid/src/pages/about/index.tsx",
+        "path": "",
+      },
+    ],
+    "component": "/examples/solid/src/pages/about.tsx",
+    "element": "/examples/solid/src/pages/about.tsx",
+    "path": "about",
+  },
+  {
+    "component": "/examples/solid/src/pages/components.tsx",
+    "element": "/examples/solid/src/pages/components.tsx",
+    "path": "components",
+  },
+  {
+    "component": "/examples/solid/src/pages/index.tsx",
+    "element": "/examples/solid/src/pages/index.tsx",
+    "path": "/",
+  },
+  {
+    "children": [
+      {
+        "component": "/examples/solid/src/pages/blog/[id].tsx",
+        "element": "/examples/solid/src/pages/blog/[id].tsx",
+        "path": ":id",
+      },
+      {
+        "component": "/examples/solid/src/pages/blog/index.tsx",
+        "element": "/examples/solid/src/pages/blog/index.tsx",
+        "path": "",
+      },
+      {
+        "children": [
+          {
+            "component": "/examples/solid/src/pages/blog/today/[...all].tsx",
+            "element": "/examples/solid/src/pages/blog/today/[...all].tsx",
+            "path": "*",
+          },
+          {
+            "component": "/examples/solid/src/pages/blog/today/index.tsx",
+            "element": "/examples/solid/src/pages/blog/today/index.tsx",
+            "path": "",
+          },
+        ],
+        "path": "today",
+      },
+    ],
+    "path": "blog",
+  },
+]
+`;
+
+>>>>>>> fork/main
 exports[`Generate routes > vue - async mode should match snapshot > client code 1`] = `
 "import _examples_vue_src_pages_index_vue from \\"/examples/vue/src/pages/index.vue\\";
 
@@ -480,80 +592,6 @@ exports[`Generate routes > vue - async mode should match snapshot > routes 1`] =
       "requiresAuth": false,
     },
     "name": "homepage",
-    "path": "/",
-    "props": true,
-  },
-]
-`;
-
-exports[`Generate routes > vue - nuxt style mode should match snapshot > client code 1`] = `
-"import _examples_nuxt_style_src_pages_index_vue from \\"/examples/nuxt-style/src/pages/index.vue\\";
-
-const routes = [{\\"name\\":\\"all\\",\\"path\\":\\"/:all(.*)*\\",\\"component\\":() => import('/examples/nuxt-style/src/pages/_.vue'),\\"props\\":true},{\\"name\\":\\"sensor-current\\",\\"path\\":\\"/:sensor/current\\",\\"component\\":() => import('/examples/nuxt-style/src/pages/_sensor/current.vue'),\\"props\\":true},{\\"path\\":\\"/about\\",\\"component\\":() => import('/examples/nuxt-style/src/pages/about.vue'),\\"children\\":[{\\"name\\":\\"about-id\\",\\"path\\":\\":id\\",\\"component\\":() => import('/examples/nuxt-style/src/pages/about/_id.vue'),\\"props\\":true},{\\"name\\":\\"about\\",\\"path\\":\\"\\",\\"component\\":() => import('/examples/nuxt-style/src/pages/about/index.vue'),\\"props\\":true},{\\"name\\":\\"who-me-override\\",\\"path\\":\\"who/me\\",\\"component\\":() => import('/examples/nuxt-style/src/pages/about/who/me.vue'),\\"props\\":true,\\"meta\\":{\\"requiresAuth\\":false}}],\\"props\\":true},{\\"name\\":\\"components\\",\\"path\\":\\"/components\\",\\"component\\":() => import('/examples/nuxt-style/src/pages/components.vue'),\\"props\\":true},{\\"name\\":\\"name-override\\",\\"path\\":\\"/\\",\\"component\\":_examples_nuxt_style_src_pages_index_vue,\\"props\\":true,\\"meta\\":{\\"requiresAuth\\":false}}];
-
-export default routes;"
-`;
-
-exports[`Generate routes > vue - nuxt style mode should match snapshot > routes 1`] = `
-[
-  {
-    "component": "/examples/nuxt-style/src/pages/_.vue",
-    "customBlock": undefined,
-    "name": "all",
-    "path": "/:all(.*)*",
-    "props": true,
-  },
-  {
-    "component": "/examples/nuxt-style/src/pages/_sensor/current.vue",
-    "customBlock": undefined,
-    "name": "sensor-current",
-    "path": "/:sensor/current",
-    "props": true,
-  },
-  {
-    "children": [
-      {
-        "component": "/examples/nuxt-style/src/pages/about/_id.vue",
-        "customBlock": undefined,
-        "name": "about-id",
-        "path": ":id",
-        "props": true,
-      },
-      {
-        "component": "/examples/nuxt-style/src/pages/about/index.vue",
-        "customBlock": undefined,
-        "name": "about",
-        "path": "",
-        "props": true,
-      },
-      {
-        "component": "/examples/nuxt-style/src/pages/about/who/me.vue",
-        "meta": {
-          "requiresAuth": false,
-        },
-        "name": "who-me-override",
-        "path": "who/me",
-        "props": true,
-      },
-    ],
-    "component": "/examples/nuxt-style/src/pages/about.vue",
-    "customBlock": undefined,
-    "path": "/about",
-    "props": true,
-  },
-  {
-    "component": "/examples/nuxt-style/src/pages/components.vue",
-    "customBlock": undefined,
-    "name": "components",
-    "path": "/components",
-    "props": true,
-  },
-  {
-    "component": "/examples/nuxt-style/src/pages/index.vue",
-    "meta": {
-      "requiresAuth": false,
-    },
-    "name": "name-override",
     "path": "/",
     "props": true,
   },

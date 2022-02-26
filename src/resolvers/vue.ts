@@ -3,30 +3,31 @@ import {
   isCatchAllRoute,
   isDynamicRoute,
   normalizeCase,
+  normalizeName,
 } from '../utils'
 import { generateClientCode } from '../stringify'
 
 import type { CustomBlock, Optional } from '../types'
 import type { PageContext } from '../context'
 
-interface Route {
+export interface VueRouteBase {
   name: string
   path: string
   props?: boolean
   component: string
-  children?: Route[]
+  children?: VueRouteBase[]
   customBlock?: CustomBlock
   rawRoute: string
 }
 
-type PrepareRoutes = Omit<Optional<Route, 'rawRoute' | 'name'>, 'children'> & {
-  children?: PrepareRoutes[]
+export interface VueRoute extends Omit<Optional<VueRouteBase, 'rawRoute' | 'name'>, 'children'> {
+  children?: VueRoute[]
 }
 
 function prepareRoutes(
   ctx: PageContext,
-  routes: PrepareRoutes[],
-  parent?: PrepareRoutes,
+  routes: VueRoute[],
+  parent?: VueRoute,
 ) {
   for (const route of routes) {
     if (route.name)
@@ -62,7 +63,7 @@ export async function resolveVueRoutes(ctx: PageContext) {
     // sort routes for HMR
     .sort((a, b) => countSlash(a.route) - countSlash(b.route))
 
-  const routes: Route[] = []
+  const routes: VueRouteBase[] = []
 
   pageRoutes.forEach((page) => {
     const pathNodes = page.route.split('/')
@@ -71,7 +72,7 @@ export async function resolveVueRoutes(ctx: PageContext) {
     const component = page.path.replace(ctx.root, '')
     const customBlock = ctx.customBlockMap.get(page.path)
 
-    const route: Route = {
+    const route: VueRouteBase = {
       name: '',
       path: '',
       component,
@@ -86,11 +87,7 @@ export async function resolveVueRoutes(ctx: PageContext) {
       const nuxtStyle = routeStyle === 'nuxt'
       const isDynamic = isDynamicRoute(node, nuxtStyle)
       const isCatchAll = isCatchAllRoute(node, nuxtStyle)
-      const normalizedName = isDynamic
-        ? nuxtStyle
-          ? isCatchAll ? 'all' : node.replace(/^_/, '')
-          : node.replace(/^\[(\.{3})?/, '').replace(/\]$/, '')
-        : node
+      const normalizedName = normalizeName(node, isDynamic, nuxtStyle)
       const normalizedPath = normalizeCase(normalizedName, caseSensitive)
 
       route.name += route.name ? `-${normalizedName}` : normalizedName
@@ -101,7 +98,7 @@ export async function resolveVueRoutes(ctx: PageContext) {
       })
 
       if (parent) {
-        // Make sure children exits in parent
+        // Make sure children exist in parent
         parent.children = parent.children || []
         // Append to parent's children
         parentRoutes = parent.children

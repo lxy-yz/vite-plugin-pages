@@ -1,8 +1,7 @@
-import path from 'path'
 import {
+  buildReactRemixRoutePath,
+  buildReactRoutePath,
   countSlash,
-  isCatchAllRoute,
-  isDynamicRoute,
   normalizeCase,
 } from '../utils'
 import { generateClientCode } from '../stringify'
@@ -10,23 +9,23 @@ import { generateClientCode } from '../stringify'
 import type { Optional, ResolvedOptions } from '../types'
 import type { PageContext } from '../context'
 
-interface Route {
+export interface ReactRouteBase {
   caseSensitive?: boolean
-  children?: Route[]
+  children?: ReactRouteBase[]
   element?: string
   index?: boolean
   path?: string
   rawRoute: string
 }
 
-type PrepareRoutes = Omit<Optional<Route, 'rawRoute' | 'path'>, 'children'> & {
-  children?: PrepareRoutes[]
+export interface ReactRoute extends Omit<Optional<ReactRouteBase, 'rawRoute' | 'path'>, 'children'> {
+  children?: ReactRoute[]
 }
 
 function prepareRoutes(
-  routes: PrepareRoutes[],
+  routes: ReactRoute[],
   options: ResolvedOptions,
-  parent?: PrepareRoutes,
+  parent?: ReactRoute,
 ) {
   for (const route of routes) {
     if (parent)
@@ -48,12 +47,13 @@ function prepareRoutes(
 
 export async function resolveReactRoutes(ctx: PageContext) {
   const { routeStyle, caseSensitive } = ctx.options
+  const nuxtStyle = routeStyle === 'nuxt'
 
   const pageRoutes = [...ctx.pageRouteMap.values()]
     // sort routes for HMR
     .sort((a, b) => countSlash(a.route) - countSlash(b.route))
 
-  const routes: Route[] = []
+  const routes: ReactRouteBase[] = []
 
   pageRoutes.forEach((page) => {
     const pathNodes = page.route.split('/')
@@ -63,7 +63,7 @@ export async function resolveReactRoutes(ctx: PageContext) {
     for (let i = 0; i < pathNodes.length; i++) {
       const node = pathNodes[i]
 
-      const route: Route = {
+      const route: ReactRouteBase = {
         caseSensitive,
         path: '',
         rawRoute: pathNodes.slice(0, i + 1).join('/'),
@@ -77,9 +77,9 @@ export async function resolveReactRoutes(ctx: PageContext) {
         route.index = true
       } else if (!isIndexRoute) {
         if (routeStyle === 'remix')
-          route.path = buildRemixRoutePath(node)
+          route.path = buildReactRemixRoutePath(node)
         else
-          route.path = buildRoutePath(node)
+          route.path = buildReactRoutePath(node, nuxtStyle)
       }
 
       // Check parent exits
@@ -110,103 +110,4 @@ export async function resolveReactRoutes(ctx: PageContext) {
   let client = generateClientCode(finalRoutes, ctx.options)
   client = (await ctx.options.onClientGenerated?.(client)) || client
   return client
-}
-
-function buildRoutePath(node: string): string | undefined {
-  const isDynamic = isDynamicRoute(node, false)
-  const isCatchAll = isCatchAllRoute(node, false)
-  const normalizedName = isDynamic
-    ? isCatchAll
-      ? 'all'
-      : node.replace(/^\[(\.{3})?/, '').replace(/\]$/, '')
-    : node
-
-  if (isDynamic) {
-    if (isCatchAll)
-      return '*'
-
-    return `:${normalizedName}`
-  }
-
-  return `${normalizedName}`
-}
-
-// https://github.dev/remix-run/remix/blob/264e3f8884c5cafd8d06acc3e01153b376745b7c/packages/remix-dev/config/routesConvention.ts#L105
-function buildRemixRoutePath(node: string): string | undefined {
-  const escapeStart = '['
-  const escapeEnd = ']'
-  let result = ''
-  let rawSegmentBuffer = ''
-
-  let inEscapeSequence = 0
-  let skipSegment = false
-  for (let i = 0; i < node.length; i++) {
-    const char = node.charAt(i)
-    const lastChar = i > 0 ? node.charAt(i - 1) : undefined
-    const nextChar = i < node.length - 1 ? node.charAt(i + 1) : undefined
-
-    function isNewEscapeSequence() {
-      return (
-        !inEscapeSequence && char === escapeStart && lastChar !== escapeStart
-      )
-    }
-
-    function isCloseEscapeSequence() {
-      return inEscapeSequence && char === escapeEnd && nextChar !== escapeEnd
-    }
-
-    function isStartOfLayoutSegment() {
-      return char === '_' && nextChar === '_' && !rawSegmentBuffer
-    }
-
-    if (skipSegment) {
-      if (char === '/' || char === '.' || char === path.win32.sep)
-        skipSegment = false
-
-      continue
-    }
-
-    if (isNewEscapeSequence()) {
-      inEscapeSequence++
-      continue
-    }
-
-    if (isCloseEscapeSequence()) {
-      inEscapeSequence--
-      continue
-    }
-
-    if (inEscapeSequence) {
-      result += char
-      continue
-    }
-
-    if (char === '/' || char === path.win32.sep || char === '.') {
-      if (rawSegmentBuffer === 'index' && result.endsWith('index'))
-        result = result.replace(/\/?index$/, '')
-      else result += '/'
-
-      rawSegmentBuffer = ''
-      continue
-    }
-
-    if (isStartOfLayoutSegment()) {
-      skipSegment = true
-      continue
-    }
-
-    rawSegmentBuffer += char
-
-    if (char === '$') {
-      result += typeof nextChar === 'undefined' ? '*' : ':'
-      continue
-    }
-
-    result += char
-  }
-
-  if (rawSegmentBuffer === 'index' && result.endsWith('index'))
-    result = result.replace(/\/?index$/, '')
-
-  return result || undefined
 }

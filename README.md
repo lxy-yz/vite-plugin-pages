@@ -18,7 +18,7 @@ Install:
 
 ```bash
 npm install -D vite-plugin-pages
-npm install vue-router@next
+npm install vue-router
 ```
 
 ### React
@@ -29,7 +29,16 @@ Install:
 
 ```bash
 npm install -D vite-plugin-pages
-npm install react-router react-router-dom react-router-config
+npm install react-router react-router-dom 
+```
+
+### Solid
+
+Install:
+
+```bash
+npm install -D vite-plugin-pages
+npm install solid-app-router
 ```
 
 ### Vite config
@@ -105,6 +114,34 @@ ReactDOM.render(
 /// <reference types="vite-plugin-pages/client-react" />
 ```
 
+### Solid
+
+**experimental**
+
+```js
+import { render } from 'solid-js/web'
+import { Router, useRoutes } from 'solid-app-router'
+import routes from '~solid-pages'
+
+const Routes = useRoutes(routes)
+
+render(
+  () => (
+    <Router>
+      <Routes />
+    </Router>
+  ),
+  document.getElementById('root') as HTMLElement,
+)
+```
+
+**Type**
+
+```ts
+// vite-env.d.ts
+/// <reference types="vite-plugin-pages/client-solid" />
+```
+
 ## Configuration
 
 To use custom configuration, pass your options to Pages when instantiating the
@@ -178,6 +215,7 @@ export default {
 - **Default:**
   - Vue: `['vue', 'ts', 'js']`
   - React: `['tsx', 'jsx']`
+  - Solid: `['tsx', 'jsx', 'ts', 'js']`
 
 An array of valid file extensions for pages.
 
@@ -460,6 +498,12 @@ Catch-all routes are denoted with square brackets containing an ellipsis:
 
 The text after the ellipsis will be used both to name the route, and as the name
 of the prop in which the route parameters are passed.
+
+
+## Sitemap generation
+
+If you need to generate a sitemap from generated routes, you can use [vite-plugin-pages-sitemap](https://github.com/jbaubree/vite-plugin-pages-sitemap).
+This plugin allow you to automatically generate sitemap.xml and robots.xml files with customization.
 
 ## License
 

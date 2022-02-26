@@ -18,6 +18,13 @@ function pagesPlugin(userOptions: UserOptions = {}): Plugin {
       )
         userOptions.resolver = 'react'
 
+      // TODO: auto set resolver for solid project
+      if (
+        !userOptions.resolver
+        && config.plugins.find(i => i.name.includes('solid'))
+      )
+        userOptions.resolver = 'solid'
+
       ctx = new PageContext(userOptions, config.root)
       await ctx.searchGlob()
     },
@@ -44,5 +51,10 @@ function pagesPlugin(userOptions: UserOptions = {}): Plugin {
 }
 
 export * from './types'
+export {
+  VueRoute,
+  ReactRoute,
+  SolidRoute,
+} from './resolvers'
 export { PageContext }
 export default pagesPlugin
